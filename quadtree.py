@@ -12,7 +12,7 @@ class AABB:
 
     def contains(self, point: vec) -> bool:
         ''' check whatever point lies in bounded box'''
-        return self.center.x + self.ext.x >= point.x >= self.center.x - self.ext.y and\
+        return self.center.x + self.ext.x >= point.x >= self.center.x - self.ext.x and\
             self.center.y + self.ext.y >= point.y >= self.center.y - self.ext.y 
 
     @property
@@ -59,6 +59,9 @@ class QuadTree:
             self._insert_inner(point)
 
     def _insert_inner(self, point: vec) -> bool:
+        if self.point and point == self.point:
+            return True
+
         if not self.aabb.contains(point):
             return False
     
