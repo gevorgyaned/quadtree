@@ -8,13 +8,15 @@ running = True
 
 point_tree = QuadTree(AABB(vec(400, 300), vec(200, 150)))
 
-def display_aabb(aabb):
-    if aabb:
-        rect = pygame.Rect(aabb.x_start, aabb.y_start, aabb.ext.x * 2, aabb.ext.y * 2)
-        pygame.draw.rect(screen, 'green', rect, 1)
+def display_aabb(quadtree):
+    if quadtree.has_children and quadtree.aabb:
+        aabb = quadtree.aabb
+        center_x, center_y = aabb.center
+        pygame.draw.line(screen, "green", (center_x + aabb.ext.x, center_y), (center_x - aabb.ext.x, center_y))
+        pygame.draw.line(screen, "green", (center_x, center_y + aabb.ext.y), (center_x, center_y - aabb.ext.y))
 
 def display_points(quadtree):
-    display_aabb(quadtree.aabb)
+    display_aabb(quadtree)
     if quadtree.point:
         pygame.draw.circle(screen, "red", quadtree.point, 3)
 
@@ -34,6 +36,10 @@ while running:
                print("value is not in the range") 
 
     screen.fill('blue')
+
+    rect = pygame.Rect(point_tree.aabb.x_start, point_tree.aabb.y_start, point_tree.aabb.ext.x * 2, point_tree.aabb.ext.y * 2)
+    pygame.draw.rect(screen, 'green', rect, 1)
+
     display_points(point_tree)
 
     pygame.display.flip()
