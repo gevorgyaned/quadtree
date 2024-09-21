@@ -84,4 +84,3 @@ class QuadTree:
 
         print(self.point)
 
-
